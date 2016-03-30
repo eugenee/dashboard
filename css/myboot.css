@@ -1,0 +1,11 @@
+.col-md-4{
+	width: 33.33333333%;
+	float:left;
+}
+
+.external:after{
+	content:'';
+	display:block;
+	border:12px ;
+  clear: both;
+}
