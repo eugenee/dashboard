@@ -3237,8 +3237,7 @@ var powerbi;
         (function (sampleData) {
             var sampleDataViews = powerbi.visuals.sampleDataViews;
             var SampleData = (function () {
-                function SampleData() {
-                }
+                function SampleData() {}
                 /**
                  * Returns sample data view for a visualization element specified.
                  */
@@ -3247,13 +3246,17 @@ var powerbi;
                     if (samples.length > 0) {
                         return samples;
                     }
-                    return this.data.filter(function (item) { return item.hasPlugin("default"); });
+                    return this.data.filter(function (item) {
+                        return item.hasPlugin("default");
+                    });
                 };
                 /**
                  * Returns sampleDataView Instance for a visualization element specified.
                  */
                 SampleData.getDataViewsBySampleName = function (sampleName) {
-                    return this.data.filter(function (item) { return (item.getName() === sampleName); })[0];
+                    return this.data.filter(function (item) {
+                        return (item.getName() === sampleName);
+                    })[0];
                 };
                 SampleData.data = [
                     new sampleDataViews.CarLogosData(),
@@ -3436,7 +3439,9 @@ var powerbi;
                     }
                     _this.dataViewsSelect.append(option);
                 });
-                this.dataViewsSelect.change(function () { return _this.onChangeDataViewSelection(_this.dataViewsSelect.val()); });
+                this.dataViewsSelect.change(function () {
+                    return _this.onChangeDataViewSelection(_this.dataViewsSelect.val());
+                });
                 if (defaultDataView) {
                     this.onChangeDataViewSelection(defaultDataView);
                 }

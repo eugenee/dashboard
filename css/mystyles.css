@@ -1,13 +1,20 @@
+@font-face{font-family:PowerVisuals;src:url(../fonts/PowerVisuals.eot?#iefix) format('embedded-opentype'),url(../fonts/PowerVisuals.woff) format('woff'),url(../fonts/PowerVisuals.ttf) format('truetype'),url(../fonts/PowerVisuals.svg) format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:wf_segoe-ui_light;src:url(../fonts/SegoeUI-Light-final.eot);src:local('Segoe UI Light'),local('Segoe WP Light'),url(../fonts/SegoeUI-Light-final.eot?#iefix) format('embedded-opentype'),url(../fonts/SegoeUI-Light-final.woff) format('woff'),url(../fonts/SegoeUI-Light-final.ttf) format('truetype'),url(../fonts/SegoeUI-Light-final.svg#web) format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:wf_segoe-ui_semilight;src:url(../fonts/SegoeUI-SemiLight-final.eot);src:local('Segoe UI Semilight'),local('Segoe WP Light'),url(../fonts/SegoeUI-SemiLight-final.eot?#iefix) format('embedded-opentype'),url(../fonts/SegoeUI-SemiLight-final.woff) format('woff'),url(../fonts/SegoeUI-SemiLight-final.ttf) format('truetype'),url(../fonts/SegoeUI-SemiLight-final.svg#web) format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:wf_segoe-ui_normal;src:url(../fonts/SegoeUI-Regular-final.eot);src:local('Segoe UI'),local('Segoe'),local('Segoe WP'),url(../fonts/SegoeUI-Regular-final.eot?#iefix) format('embedded-opentype'),url(../fonts/SegoeUI-Regular-final.woff) format('woff'),url(../fonts/SegoeUI-Regular-final.ttf) format('truetype'),url(../fonts/SegoeUI-Regular-final.svg#web) format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:wf_segoe-ui_semibold;src:url(../fonts/SegoeUI-SemiBold-final.eot);src:local('Segoe UI Semibold'),local('Segoe Semibold'),local('Segoe WP Semibold'),url(../fonts/SegoeUI-SemiBold-final.eot?#iefix) format('embedded-opentype'),url(../fonts/SegoeUI-SemiBold-final.woff) format('woff'),url(../fonts/SegoeUI-SemiBold-final.ttf) format('truetype'),url(../fonts/SegoeUI-SemiBold-final.svg#web) format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:wf_segoe-ui_bold;src:url(../fonts/SegoeUI-Bold-final.eot);src:local('Segoe UI bold'),local('Segoe bold'),local('Segoe WP bold'),url(../fonts/SegoeUI-Bold-final.eot?#iefix) format('embedded-opentype'),url(../fonts/SegoeUI-Bold-final.woff) format('woff'),url(../fonts/SegoeUI-Bold-final.ttf) format('truetype'),url(../fonts/SegoeUI-Bold-final.svg#web) format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:wf_standard-font;src:url(../fonts/StandardFont.eot);src:url(../fonts/StandardFont.eot?#iefix) format('embedded-opentype'),url(../fonts/StandardFont.woff) format('woff'),url(../fonts/StandardFont.ttf) format('truetype');font-weight:400;font-style:normal}
+@font-face{font-family:wf_standard-font_bold;src:url(../fonts/StandardFontBold.eot);src:url(../fonts/StandardFontBold.eot?#iefix) format('embedded-opentype'),url(../fonts/StandardFontBold.woff) format('woff'),url(../fonts/StandardFontBold.ttf) format('truetype');font-weight:400;font-style:normal}
+@font-face{font-family:wf_standard-font_light;src:url(../fonts/StandardFontLight.eot);src:url(../fonts/StandardFontLight.eot?#iefix) format('embedded-opentype'),url(../fonts/StandardFontLight.woff) format('woff'),url(../fonts/StandardFontLight.ttf) format('truetype');font-weight:400;font-style:normal}
+
 /*bs3 addons*/
 .bg-gray{
 	background-color: #eee;
 	padding: 5px;
 }
 
-body{
-	font-family: 'Open Sans', "Helvetica Neue",Helvetica,Arial,sans-serif;
-	background-color: white;
-}
+body{}
 .navbar{
 	background-color: #222;
 	border:0 none;

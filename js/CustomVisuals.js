@@ -18608,48 +18608,71 @@ var powerbi;
                 };
                 CustomVisualPluginService.prototype.initCustomVisualPlugins = function () {
                     // Radar Chart
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.radarChart, function () { return new visuals.samples.RadarChart({
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.radarChart, function () {
+                        return new visuals.samples.RadarChart({
                         animator: new visuals.BaseAnimator()
-                    }); });
+                        });
+                    });
                     // DotPlot
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.dotPlot, function () { return new visuals.samples.DotPlot({
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.dotPlot, function () {
+                        return new visuals.samples.DotPlot({
                         animator: new visuals.BaseAnimator()
-                    }); });
+                        });
+                    });
                     // Histogram
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.histogram, function () { return new visuals.samples.Histogram({
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.histogram, function () {
+                        return new visuals.samples.Histogram({
                         animator: new visuals.BaseAnimator()
-                    }); });
+                        });
+                    });
                     // Area Range Chart
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.areaRangeChart, function () { return new visuals.samples.AreaRangeChart({
-                        animator: new visuals.BaseAnimator()
-                    }); });
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.areaRangeChart, function () {
+                        return new visuals.samples.AreaRangeChart({
+                            animator: new visuals.BaseAnimator()
+                        });
+                    });
                     // Chiclet Slicer
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.chicletSlicer, function () { return new visuals.samples.ChicletSlicer({
-                        behavior: new visuals.samples.ChicletSlicerWebBehavior()
-                    }); });
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.chicletSlicer, function () {
+                        return new visuals.samples.ChicletSlicer({
+                            behavior: new visuals.samples.ChicletSlicerWebBehavior()
+                        });
+                    });
                     // Tornado Chart
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.tornadoChart, function () { return new visuals.samples.TornadoChart({
-                        animator: new visuals.BaseAnimator()
-                    }); });
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.tornadoChart, function () {
+                        return new visuals.samples.TornadoChart({
+                            animator: new visuals.BaseAnimator()
+                        });
+                    });
                     // Sankey Diagram
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.sankeyDiagram, function () { return new visuals.samples.SankeyDiagram(); });
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.sankeyDiagram, function () {
+                        return new visuals.samples.SankeyDiagram(); });
                     // Word Cloud
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.wordCloud, function () { return new visuals.samples.WordCloud({
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.wordCloud, function () {
+                        return new visuals.samples.WordCloud({
                         animator: new visuals.BaseAnimator()
-                    }); });
+                        });
+                    });
                     // Enhanced Scatter Chart
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.enhancedScatterChart, function () { return new visuals.samples.EnhancedScatterChart(); });
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.enhancedScatterChart, function () {
+                        return new visuals.samples.EnhancedScatterChart();
+                    });
                     // Bullet Chart
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.bulletChart, function () { return new visuals.samples.BulletChart(); });
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.bulletChart, function () {
+                        return new visuals.samples.BulletChart();
+                    });
                     // Force Graph
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.forceGraph, function () { return new visuals.samples.ForceGraph(); });
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.forceGraph, function () {
+                        return new visuals.samples.ForceGraph();
+                    });
                     // Mekko Chart
-                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.mekkoChart, function () { return new visuals.samples.MekkoChart({
+                    visualPluginFactory.createPlugin(this.customVisualPlugins, powerbi.visuals.plugins.mekkoChart, function () {
+                        return new visuals.samples.MekkoChart({
                         chartType: 0 /* HundredPercentStackedColumn */,
                         isScrollable: true,
                         animator: new visuals.WebColumnChartAnimator(),
                         behavior: new visuals.CartesianChartBehavior([new visuals.ColumnChartWebBehavior()]),
-                    }); });
+                        });
+                    });
                 };
                 return CustomVisualPluginService;
             })(visualPluginFactory.VisualPluginService);

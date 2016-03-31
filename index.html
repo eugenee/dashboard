@@ -3,122 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <title>Dashboard</title>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="//microsoft.github.io/PowerBI-visuals/playground/styles/visuals.css">
-<link rel="stylesheet" href="css/mystyles.css">
+<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="css/visuals.min.css">
+<!-- <link rel="stylesheet" href="css/customVisuals.css"> -->
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <h1><i class="fa fa-bar-chart"></i> App</h1>
-    </nav>
 
-    <section class="menu">
-      <ul class="nav">
-        <li><a href="#"><i class="fa fa-toggle-off"></i> Auditor View</a></li>
-        <li><a href="#"><i class="fa fa-thumbs-up"></i> Submit Client Dashboard</a></li>
-        <li><a href="#"><i class="fa fa-lightbulb-o"></i> Ready for Review</a></li>
-        <li><a href="#"><i class="fa fa-file-excel-o"></i> Send to Excel</a></li>
-        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-        <li><a href="#"><i class="fa fa-ban"></i> Cancel Changes</a></li>
-      </ul>
-    </section>
-    <section class="widgets">
-      <h5 class="text-center">Widgets</h5>
-      <ul class="nav">
-        <li><a href="#"><i class="fa fa-pie-chart"></i> Pie Chart</a></li>
-        <li><a href="#"><i class="fa fa-line-chart"></i> Line Chart</a></li>
-        <li><a href="#"><i class="fa fa-area-chart"></i> Area Chart</a></li>
-        <li><a href="#"><i class="fa fa-bar-chart"></i> Bar Chart</a></li>
-      </ul>
-    </section>
-    <nav class="leftpane text-center">
-      <ul class="nav">
-        <li><a href="#" data-open="menu"><i class="fa fa-bars"></i></a></li>
-        <li><a href="#" data-open="widgets"><i class="fa fa-wrench"></i></a></li>
-      </ul>
-    </nav>
-    <nav class="rightpane">
-      <button type="button" class="btn btn-link btn-show"><i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i></button>
-      <ul class="nav">
-        <li><a href="#"><i class="fa fa-pie-chart"></i></a></li>
-        <li><a href="#"><i class="fa fa-line-chart"></i></a></li>
-        <li><a href="#"><i class="fa fa-area-chart"></i></a></li>
-        <li><a href="#"><i class="fa fa-bar-chart"></i></a></li>
-      </ul>
-    </nav>
+<div class="visual pbi1"></div>
 
-    <main class="mainpane">
-      <div class="bg-primary text-center">Design mode</div>
-      <article class="workarea">
-        <br>
-        <p class="bg-gray">Title</p>
-        <strong>Subtitle</strong>
-        <hr>
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs">
-          <li class="nonact"><a href="#a2" data-toggle="tab">Instructions</a></li>
-          <li class="active"><a href="#a1" data-toggle="tab">Sampling</a></li>
-          <li class="nonact"><a href="#a3" data-toggle="tab">Confirmation Testing</a></li>
-        </ul>
-        <br>
-        <!-- Tab panes -->
-        <div class="tab-content">
-          <div class="tab-pane active" id="a1">
-              <section class="flexrow">
-                <div class="co">
-                  <div class="panel panel-default">
-                    <div class="panel-heading"> <h3 class="panel-title">Panel title</h3> </div>
-                    <div class="widg-body">
-                      <div class="visual pbi1"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="co">
-                  <div class="panel panel-default">
-                    <div class="panel-heading"> <h3 class="panel-title">Panel title</h3> </div>
-                    <div class="widg-body">
-                      <div class="visual pbi2"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="co">
-                  <div class="panel panel-default">
-                    <div class="panel-heading"> <h3 class="panel-title">Panel title</h3> </div>
-                    <div class="widg-body">
-                      <div class="visual pbi2"></div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-              <div class="panel panel-success">
-                <div class="panel-heading"> <h3 class="panel-title">Excel</h3> </div>
-                <div class="widg-body">
-                Table
-                </div>
-                <div class="panel-footer">.</div>
-              </div>
-          </div>
-          <div class="tab-pane nonact" id="a2">textbox</div>
-          <div class="tab-pane nonact" id="a3">textbox</div>
-        </div>
-      </article>
-    </main>
+<script src="js/jquery-2.2.2.min.js"></script>
+<script src="js/d3-3.5.5.min.js"></script>
+<script src="js/lodash-3.6.0.custom.js"></script>
+<script src="js/globalize.min.js"></script>
+<script src="js/globalize.culture.en-US.js"></script>
 
-<script src="//code.jquery.com/jquery-2.2.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
-<script src="js/powerbi-visuals.all.min.js"></script>
+<script src="js/visuals.min.js"></script>
+<!-- <script src="js/CustomVisuals.js"></script> -->
 
 <script>
     'use strict';
+    var utils = {};
+    utils.getRandomValue = function(min, max) {
+        var value = Math.random() * (max - min) + min;
+        return Math.ceil(value * 100) / 100;
+    };
+    utils.random = function(amount, min, max) {
+        var array = [];
+        var i = 0;
+        while (i < amount) {
+            array.push(utils.getRandomValue(min, max));
+            i++;
+        }
+        return array;
+    }
+
+    ///
+
     var createDataView = function () {
-        var fieldExpr = powerbi.data.SQExprBuilder.fieldExpr({ column: { entity: "table1", name: "country" } });
-        var categoryValues = ["Australia", "Canada", "France", "Germany", "UK", "United States"];
-        var categoryIdentities = categoryValues.map(function (value) {
-            var expr = powerbi.data.SQExprBuilder.equal(fieldExpr, powerbi.data.SQExprBuilder.text(value));
-            return powerbi.data.createDataViewScopeIdentity(expr);
-        });
         // Metadata, describes the data columns, and provides the visual with hints
         // so it can decide how to best represent the data
         var dataViewMetadata = {
@@ -147,18 +69,23 @@
               legend: { show: true, position: 'Top' }
             }
         };
+        var categoryValues = ["Australia", "Canada", "France", "Germany", "UK", "United States"];
         var columns = [
             {
                 source: dataViewMetadata.columns[1],
-                values: [742731.43, 162066.43, 283085.78, 300263.49, 376074.57, 814724.34],
+                values: utils.random(categoryValues.length, 30000, 100000)
             },
             {
                 source: dataViewMetadata.columns[2],
-                values: [742731.43, 162066.43, 283085.78, 300263.49, 376074.57, 814724.34].reverse()
+                values: utils.random(categoryValues.length, 30000, 100000)
             }
         ];
-        var DataViewTransform = powerbi.data.DataViewTransform;
-        var dataValues = DataViewTransform.createValueColumns(columns);
+        var fieldExpr = powerbi.data.SQExprBuilder.fieldExpr({ column: { schema: 's', entity: "table1", name: "country" } });
+        var categoryIdentities = categoryValues.map(function (value) {
+            var expr = powerbi.data.SQExprBuilder.equal(fieldExpr, powerbi.data.SQExprBuilder.text(value));
+            return powerbi.data.createDataViewScopeIdentity(expr);
+        });
+        var dataValues = powerbi.data.DataViewTransform.createValueColumns(columns);
         var dataView = {
             metadata: dataViewMetadata,
             categorical: {
@@ -174,38 +101,26 @@
         return dataView;
     };
 
-    function createDefaultStyles(){
-        var dataColors = new powerbi.visuals.DataColorPalette();
-        return {
-            colorPalette: {
-                dataColors: dataColors,
-            }
-        };
-    }
-
-    function createVisual(el) {
-        var pluginService = powerbi.visuals.visualPluginFactory.create();
-        var defaultVisualHostServices = powerbi.visuals.defaultVisualHostServices;
-        var width = 400;
-        var height = 300;
-        var element = $(el);
+    function createVisual(element) {
+        var pluginService = new powerbi.visuals.visualPluginFactory.PlaygroundVisualPluginService();
+        var width = 400, height = 300;
         element.height(height).width(width);
+        var viewport = { height: height, width: width };
         // Get a plugin
-        var visual = pluginService.getPlugin('columnChart').create();
-        powerbi.visuals.DefaultVisualHostServices.initialize(); 
+        var visual = pluginService.getPlugin('donutChart').create();
+        powerbi.visuals.DefaultVisualHostServices.initialize();
         visual.init({
             // empty DOM element the visual should attach to.
             element: element,
             // host services
-            host: defaultVisualHostServices,
-            style: createDefaultStyles(),
-            viewport: {height:height, width:width},
+            host: powerbi.visuals.defaultVisualHostServices,
+            style: {colorPalette: {dataColors: new powerbi.visuals.DataColorPalette()}},
+            viewport: viewport,
             settings: { slicingEnabled: true },
-            interactivity: { isInteractiveLegend: false, selection: false },
+            interactivity: { isInteractiveLegend: false, selection: true },
             animation: { transitionImmediate: true }
         });
-        var dataViews = [createDataView()],
-            viewport = { height: height, width: width };
+        var dataViews = [createDataView()];
         if (visual.update) {
             // Call update to draw the visual with some data
             visual.update({
@@ -219,7 +134,7 @@
             visual.onDataChanged({ dataViews: dataViews });
         }
     }
-    createVisual('.pbi1');
+    createVisual( $('.pbi1') );
 
 </script>
 </body>

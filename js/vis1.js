@@ -1,23 +1,11 @@
 (function(){
     'use strict';
-    var rdm = {};
-    rdm.getRandomValue = function (min, max) {
-        var value = Math.random() * (max - min) + min;
-        return Math.ceil(value * 100) / 100;
-    };
-    rdm.sampleData0 = [ [1,1,1,1,1,1], [1,1,1,1,1,1] ];
-    rdm.sampleData1 = rdm.sampleData0.map(function (item) {
-        return item.map(function () {
-            return rdm.getRandomValue(30000, 1000000);
-        });
-    });
-
     var createDataView = function () {
         // Metadata, describes the data columns, and provides the visual with hints
         // so it can decide how to best represent the data
         var dataViewMetadata = {
             objects: {
-              legend: { show: false}
+              legend: { show: true}
             },
             columns: [
                 {
@@ -42,19 +30,19 @@
                 }
             ]
         };
+        var categoryValues = ["Australia", "Canada", "France", "Germany", "UK", "USA"];
         var columns = [
             {
                 source: dataViewMetadata.columns[1],// Sales Amount for 2014
-                values: rdm.sampleData1[0]
+                values: utils.random(categoryValues.length, 30000, 100000)
             },
             {
                 source: dataViewMetadata.columns[2],// Sales Amount for 2013
-                values: rdm.sampleData1[1]
+                values: utils.random(categoryValues.length, 30000, 100000)
                 //[742731.43, 162066.43, 376074.57, 814724.34, 283085.78, 300263.49]
             }
         ];
         var fieldExpr = powerbi.data.SQExprBuilder.fieldExpr({ column: { schema: 's', entity: "table1", name: "country" } });
-        var categoryValues = ["Australia", "Canada", "France", "Germany", "UK", "USA"];
         var categoryIdentities = categoryValues.map(function (value) {
             var expr = powerbi.data.SQExprBuilder.equal(fieldExpr, powerbi.data.SQExprBuilder.text(value));
             return powerbi.data.createDataViewScopeIdentity(expr);
@@ -73,17 +61,15 @@
 
         return dataView;
     };
-
-    function createVisual(elem) {
-        elem.height(250).width(440);
+    function createVisual(visType,elem) {
+        elem.height(250).width(400);
         var viewport = { height: 250, width: 400 };
-        var visual = powerbi.visuals.visualPluginFactory.create().getPlugin('donutChart').create();
+        var visual = powerbi.visuals.visualPluginFactory.create().getPlugin(visType).create();
         powerbi.visuals.DefaultVisualHostServices.initialize();
         visual.init({
-            // empty DOM element the visual should attach to.
             element: elem,
             host: powerbi.visuals.defaultVisualHostServices,// host services
-            style: {colorPalette: {dataColors: new powerbi.visuals.DataColorPalette()} },
+            style: { colorPalette: {dataColors: new powerbi.visuals.DataColorPalette()} },
             viewport: viewport,
             interactivity: { isInteractiveLegend: false, selection: true },
             settings: { slicingEnabled: true }
@@ -94,7 +80,7 @@
             visual.update({
                 dataViews: dataViews,
                 viewport: viewport,
-                duration: 0
+                duration: 222
             });
         } else if (visual.onDataChanged && visual.onResizing) {
             // Call onResizing and onDataChanged (old API) to draw the visual with some data
@@ -102,5 +88,5 @@
             visual.onDataChanged({ dataViews: dataViews });
         }
     }
-    createVisual($('.pbi1'));
+    createVisual('pieChart', $('.pbi1'));
 })();

@@ -3,18 +3,19 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>pbi</title>
-    <link href="css/visuals.css" rel="stylesheet"/>
+    <link href="css/visuals.min.css" rel="stylesheet"/>
     <link href="css/customVisuals.css" rel="stylesheet"/>
     <style>
     .flex{
-        display: flex;
+        display: table;
     }
     .flex > section{
-    	/*min-width: 440px;*/
+    	display: table-cell;
     }
     .visual{
     	position: relative;
     }
+
     </style>
 </head>
 <body>
@@ -23,8 +24,28 @@
 	<section><div class="visual pbi2"></div></section>
 </main>
 <script src="js/jquery-2.2.2.min.js"></script>
-<script src="js/powerbi-visuals.all.min.js"></script>
+<script src="js/d3-3.5.5.min.js"></script>
+<script src="js/lodash-3.6.0.custom.js"></script>
+<script src="js/globalize.min.js"></script>
+<script src="js/globalize.culture.en-US.js"></script>
+<script src="js/visuals.min.js"></script>
 <script src="js/CustomVisuals.js"></script>
+<script>
+    var utils = {};
+    utils.getRandomValue = function(min, max) {
+        var value = Math.random() * (max - min) + min;
+        return Math.ceil(value * 100) / 100;
+    };
+    utils.random = function(amount, min, max) {
+        var array = [];
+        var i = 0;
+        while (i < amount) {
+            array.push(utils.getRandomValue(min, max));
+            i++;
+        }
+        return array;
+    }
+</script>
 <script src="js/vis1.js"></script>
 <script src="js/vis2.js"></script>
 

@@ -1,64 +1,65 @@
+
 (function(){
     'use strict';
-    var rdm = {};
-    rdm.getRandomValue = function (min, max) {
-        var value = Math.random() * (max - min) + min;
-        return Math.ceil(value * 100) / 100;
-    };
-    rdm.sampleData0 = [ [1,1,1,1,1,1], [1,1,1,1,1,1] ];
-    rdm.sampleData1 = rdm.sampleData0.map(function (item) {
-        return item.map(function () {
-            return rdm.getRandomValue(30000, 1000000);
-        });
-    });
-
     var createDataView = function () {
         // Metadata, describes the data columns, and provides the visual with hints
         // so it can decide how to best represent the data
         var dataViewMetadata = {
             objects: {
-              legend: { show: true, position: 'Bottom' }
+                categoryLabels: { show: true }
             },
             columns: [
                 {
-                    displayName: 'Country',
-                    queryName: 'Country',
-                    type: powerbi.ValueType.fromDescriptor({ text: true })
+                    displayName: 'series',
+                    isMeasure: false,
+                    queryName: 'series',
+                    roles: {"Category": true,"Series": true},
+                    type: powerbi.ValueType.fromPrimitiveTypeAndCategory(powerbi.PrimitiveType.Text)
                 },
                 {
-                    displayName: 'Sales (2014)',
+                    displayName: 'Total Sales Variance %',
+                    groupName: 'Total Sales Variance %',
                     isMeasure: true,
-                    format: "$0",
-                    queryName:'sales 1',
-                    type: powerbi.ValueType.fromDescriptor({ numeric: true })
+                    queryName: "x",
+                    roles: { "X": true },
+                    type: powerbi.ValueType.fromPrimitiveTypeAndCategory(powerbi.PrimitiveType.Double)
                 },
                 {
-                    displayName: 'Sales (2013)',
+                    displayName: 'Sales Per Sq Ft',
+                    groupName: 'Sales Per Sq Ft',
                     isMeasure: true,
-                    format: "$0",
-                    queryName:'sales 2',
-                    type: powerbi.ValueType.fromDescriptor({ numeric: true })
+                    queryName: "y",
+                    roles: { "Y": true },
+                    type: powerbi.ValueType.fromPrimitiveTypeAndCategory(powerbi.PrimitiveType.Double)
+                },
+                {
+                    displayName: 'valueSize',
+                    groupName: 'valueSize',
+                    isMeasure: true,
+                    queryName: "size",
+                    roles: { "Size": true },
+                    type: powerbi.ValueType.fromPrimitiveTypeAndCategory(powerbi.PrimitiveType.Double)
                 }
             ]
         };
+        var categoryValues = ["FD - 01", "FD - 02", "FD - 03", "FD - 04", "LI - 01", "LI - 02", "LI - 03"];
         var columns = [
             {
-                source: dataViewMetadata.columns[1],// Sales Amount for 2014
-                values: rdm.sampleData1[0]
-            },
-            {
-                source: dataViewMetadata.columns[2],// Sales Amount for 2013
-                values: rdm.sampleData1[1]
-                //[742731.43, 162066.43, 376074.57, 814724.34, 283085.78, 300263.49]
-            }
-        ];
-
-        var categoryValues = ["Australia", "Canada", "France", "Germany", "UK", "USA"];
+                source: dataViewMetadata.columns[1],
+                values: utils.random(categoryValues.length, 10, 300)
+            }, {
+                source: dataViewMetadata.columns[2],
+                values: utils.random(categoryValues.length, 10, 300)
+            }, {
+                source: dataViewMetadata.columns[3],
+                values: utils.random(categoryValues.length, 10, 300)
+            }];
         var fieldExpr = powerbi.data.SQExprBuilder.fieldExpr({ column: { schema: 's', entity: "table1", name: "country" } });
         var categoryIdentities = categoryValues.map(function (value) {
             var expr = powerbi.data.SQExprBuilder.equal(fieldExpr, powerbi.data.SQExprBuilder.text(value));
             return powerbi.data.createDataViewScopeIdentity(expr);
         });
+        var seriesIdentityField = powerbi.data.SQExprBuilder.fieldExpr({ column: { schema: 's', entity: 'e', name: 'series' } });
         var dataView = {
             metadata: dataViewMetadata,
             categorical: {
@@ -66,20 +67,29 @@
                     source: dataViewMetadata.columns[0],
                     values: categoryValues,
                     identity: categoryIdentities,
+                    identityFields: [seriesIdentityField],
+                    objects: [
+                        { dataPoint: { fill: { solid: { color: '#113F8C' } } } },
+                        { dataPoint: { fill: { solid: { color: '#61AE24' } } } },
+                        { dataPoint: { fill: { solid: { color: '#D0D102' } } } },
+                        { dataPoint: { fill: { solid: { color: '#D70060' } } } },
+                        { dataPoint: { fill: { solid: { color: '#F18D05' } } } },
+                        { dataPoint: { fill: { solid: { color: '#616161' } } } },
+                        { dataPoint: { fill: { solid: { color: '#00A1CB' } } } }]
                 }],
                 values: powerbi.data.DataViewTransform.createValueColumns(columns)
             }
         };
+
         return dataView;
     };
 
-    function createVisual(elem) {
-        elem.height(250).width(440);
+    function createVisual(visType, elem) {
+        elem.height(250).width(400);
         var viewport = { height: 250, width: 400 };
-        var visual = powerbi.visuals.visualPluginFactory.create().getPlugin('clusteredBarChart').create();
+        var visual = powerbi.visuals.visualPluginFactory.create().getPlugin(visType).create();
         powerbi.visuals.DefaultVisualHostServices.initialize();
         visual.init({
-            // empty DOM element the visual should attach to.
             element: elem,
             host: powerbi.visuals.defaultVisualHostServices,// host services
             style: {colorPalette: {dataColors: new powerbi.visuals.DataColorPalette()} },
@@ -87,13 +97,13 @@
             interactivity: { isInteractiveLegend: false, selection: true },
             settings: { slicingEnabled: true }
         });
-        var dataViews = [createDataView()];
+        var dataViews = [createDataView()]
         if (visual.update) {
             // Call update to draw the visual with some data
             visual.update({
                 dataViews: dataViews,
                 viewport: viewport,
-                duration: 0
+                duration: 222
             });
         } else if (visual.onDataChanged && visual.onResizing) {
             // Call onResizing and onDataChanged (old API) to draw the visual with some data
@@ -101,5 +111,5 @@
             visual.onDataChanged({ dataViews: dataViews });
         }
     }
-    createVisual($('.pbi2'));
+    createVisual('enhancedScatterChart',$('.pbi2'));
 })();
