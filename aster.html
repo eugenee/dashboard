@@ -24,10 +24,12 @@
 <script src="js/globalize.culture.en-US.js"></script>
 
 <script src="js/visuals.min.js"></script>
-<!-- <script src="js/CustomVisuals.js"></script> -->
 <script src="pbi/asterPlot.js"></script>
 
 <script>
+var visual;
+var dataVws;
+//(function(){
     'use strict';
     var utils = {};
     utils.getRandomValue = function(min, max) {
@@ -44,7 +46,7 @@
         return array;
     }
 
-    ///
+    //
 
     var createDataView = function () {
         // Metadata, describes the data columns, and provides the visual with hints
@@ -52,68 +54,54 @@
         var dataViewMetadata = {
             columns: [
                 {
-                    displayName: 'Country',
-                    queryName: 'Country',
+                    displayName: 'Day',
+                    queryName: 'Day',
                     type: powerbi.ValueType.fromDescriptor({ text: true })
                 },
                 {
-                    displayName: 'Sales Amount (2014)',
+                    displayName: 'This week',
                     isMeasure: true,
-                    format: "$0",
-                    queryName:'sales1',
-                    type: powerbi.ValueType.fromDescriptor({ numeric: true }),
-                },
-                {
-                    displayName: 'Sales Amount (2013)',
-                    isMeasure: true,
-                    format: "$0",
-                    queryName:'sales2',
+                    format: "$0,000.00",
+                    queryName: 'sales2',
                     type: powerbi.ValueType.fromDescriptor({ numeric: true })
                 }
-            ],
-            objects: {
-              legend: { show: true, position: 'Top' }
-            }
+            ]
         };
-        var categoryValues = ["Australia", "Canada", "France", "Germany", "UK", "United States"];
+        var categoryValues = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
         var columns = [
             {
                 source: dataViewMetadata.columns[1],
-                values: utils.random(categoryValues.length, 30000, 100000)
-            },
-            {
-                source: dataViewMetadata.columns[2],
-                values: utils.random(categoryValues.length, 30000, 100000)
+                values: utils.random(categoryValues.length, 1000, 10000)
             }
         ];
-        var fieldExpr = powerbi.data.SQExprBuilder.fieldExpr({ column: { schema: 's', entity: "table1", name: "country" } });
+        var fieldExpr = powerbi.data.SQExprBuilder.fieldExpr({ column: { schema: 's', entity: "table1", name: "day of week" } });
         var categoryIdentities = categoryValues.map(function (value) {
             var expr = powerbi.data.SQExprBuilder.equal(fieldExpr, powerbi.data.SQExprBuilder.text(value));
             return powerbi.data.createDataViewScopeIdentity(expr);
         });
         var dataValues = powerbi.data.DataViewTransform.createValueColumns(columns);
-        var dataView = {
-            metadata: dataViewMetadata,
-            categorical: {
-                categories: [{
-                    source: dataViewMetadata.columns[0],
-                    values: categoryValues,
-                    identity: categoryIdentities,
-                }],
-                values: dataValues
-            }
-        };
 
+        var dataView = {
+                metadata: dataViewMetadata,
+                categorical: {
+                    categories: [{
+                            source: dataViewMetadata.columns[0],
+                            values: categoryValues,
+                            identity: categoryIdentities,
+                        }],
+                    values: dataValues
+                }
+            };
         return dataView;
+
     };
-    var visual;
-    function createVisual(element, pbivis) {
-        var width = 400, height = 300;
+    function createVisual(element, visType) {
+        var width = 400, height = 400;
         element.height(height).width(width);
         var viewport = { height: height, width: width };
         // Get a plugin
         var pluginService = new powerbi.visuals.visualPluginFactory.PlaygroundVisualPluginService();
-        visual = pluginService.getPlugin(pbivis).create();
+        visual = pluginService.getPlugin(visType).create();
         powerbi.visuals.DefaultVisualHostServices.initialize();
         visual.init({
             // empty DOM element the visual should attach to.
@@ -126,22 +114,15 @@
             interactivity: { isInteractiveLegend: false, selection: true },
             animation: { transitionImmediate: true }
         });
-        var dataViews = [createDataView()];
-        if (visual.update) {
-            // Call update to draw the visual with some data
-            visual.update({
-                dataViews: dataViews,
-                viewport: viewport,
-                duration: 0
-            });
-        } else if (visual.onDataChanged && visual.onResizing) {
-            // Call onResizing and onDataChanged (old API) to draw the visual with some data
-            visual.onResizing(viewport);
-            visual.onDataChanged({ dataViews: dataViews });
-        }
+        visual.update({
+            dataViews: [createDataView()],
+            viewport: viewport,
+            duration: 0
+        });
+
     }
     createVisual( $('.pbi1'), 'asterPlot' );
-
+//})();
 </script>
 </body>
 </html>
